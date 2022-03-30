@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class ViewController: UIViewController {
 
@@ -18,14 +19,23 @@ class ViewController: UIViewController {
     @IBOutlet weak var citiesLabel: UILabel!
      
     let networkWeatherManager = NetworkWeatherManager()
-    
+    lazy var locationManager: CLLocationManager = {
+        let lm = CLLocationManager()
+        lm.delegate = self
+        lm.desiredAccuracy = kCLLocationAccuracyKilometer //точность пару километров
+        lm.requestWhenInUseAuthorization()
+        return lm
+     
+    } ()
     override func viewDidLoad() {
         super.viewDidLoad()
         networkWeatherManager.onCompletion = { [weak self] currentWeather in
             guard let self = self else { return }
             self.updateInterfaceWith(weather: currentWeather)
         }
-        networkWeatherManager.fetchCurrentWeather(forCity: "London")
+        if CLLocationManager.locationServicesEnabled() { //у пользователя могут быть отклбчены настроики геопозиции (общая настройка). Если оно выключено
+            locationManager.requestLocation() //requestLocation - один раз запрашивает геопозицию
+        }
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
@@ -40,6 +50,20 @@ class ViewController: UIViewController {
             self.feelLikeTemperatureLabel.text = "\(weather.feelsLikeTempratureString)°C"
             self.weatherImageView.image = UIImage(systemName: weather.systemIconNameString)
         }
+    }
+}
+//MARK: - CLLocationManagerDelegate
+extension ViewController: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.last else { return } //получаем последний элемент из массива геопозиций
+        //получаем последнюю геопозицию по широте и долготе
+        let latitude = location.coordinate.latitude
+        let longitude = location.coordinate.longitude
+        
+        networkWeatherManager.fetchCurrentWeather(forCity: <#T##String#>)
+    }
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        print(error.localizedDescription)
     }
 }
 
