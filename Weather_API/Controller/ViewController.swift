@@ -16,10 +16,12 @@ class ViewController: UIViewController {
     @IBOutlet weak var feelLikeTemperatureLabel: UILabel!
     
     @IBOutlet weak var citiesLabel: UILabel!
+     
     
+    let networkWeatherManager = NetworkWeatherManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        networkWeatherManager.fetchCurrentWeather(forCity: "London")
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
