@@ -8,7 +8,7 @@
 import UIKit
 
 extension ViewController {
-    func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style) {
+    func presentSearchAlertController(withTitle title: String?, message: String?, style: UIAlertController.Style, completionHandler: @escaping(String) -> Void) {
         let al = UIAlertController(title: title, message: message, preferredStyle: style)
         al.addTextField { textField in
             let cities = ["San Francisco", "Moscow", "New York", "Stambul", "Viena"]
@@ -18,7 +18,11 @@ extension ViewController {
             let textField = al.textFields?.first
             guard let cityName = textField?.text else { return }
             if cityName != "" {
-                print("search info for the \(cityName)")
+          //      self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
+                //создаем сити (если название города состоит из двух слов, метод split делает из него массив через разделитель, и потом соединяет
+                let city = cityName.split(separator: " ").joined(separator: "%20") // %20 - это URL - код пробела
+                completionHandler(city)
+                
             }
         }
         let cancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
