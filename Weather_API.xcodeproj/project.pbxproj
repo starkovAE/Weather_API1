@@ -16,6 +16,7 @@
 		3FC6700F27F2EE72006868E3 /* VC + AlertVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC6700E27F2EE72006868E3 /* VC + AlertVC.swift */; };
 		3FC6701127F44389006868E3 /* NetworkWeatherManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC6701027F44389006868E3 /* NetworkWeatherManager.swift */; };
 		3FC6701327F4446A006868E3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC6701227F4446A006868E3 /* Constants.swift */; };
+		3FC6701527F44D62006868E3 /* CurrentWetherData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FC6701427F44D62006868E3 /* CurrentWetherData.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		3FC6700E27F2EE72006868E3 /* VC + AlertVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VC + AlertVC.swift"; sourceTree = "<group>"; };
 		3FC6701027F44389006868E3 /* NetworkWeatherManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkWeatherManager.swift; sourceTree = "<group>"; };
 		3FC6701227F4446A006868E3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3FC6701427F44D62006868E3 /* CurrentWetherData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWetherData.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				3FC6701027F44389006868E3 /* NetworkWeatherManager.swift */,
+				3FC6701427F44D62006868E3 /* CurrentWetherData.swift */,
 			);
 			path = "Model ";
 			sourceTree = "<group>";
@@ -188,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3FC66FFA27F2EDFF006868E3 /* ViewController.swift in Sources */,
+				3FC6701527F44D62006868E3 /* CurrentWetherData.swift in Sources */,
 				3FC66FF627F2EDFF006868E3 /* AppDelegate.swift in Sources */,
 				3FC6701127F44389006868E3 /* NetworkWeatherManager.swift in Sources */,
 				3FC6700F27F2EE72006868E3 /* VC + AlertVC.swift in Sources */,
