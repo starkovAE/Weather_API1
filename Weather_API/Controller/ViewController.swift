@@ -17,16 +17,20 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var citiesLabel: UILabel!
      
-    
     let networkWeatherManager = NetworkWeatherManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkWeatherManager.fetchCurrentWeather(forCity: "London")
+        networkWeatherManager.fetchCurrentWeather(forCity: "London") { currentWeather in
+            print(currentWeather.cityName)
+        }
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
         self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { cityName in
-            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
+            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName){ currentWeather in
+                print(currentWeather.cityName)
+            }
         }
     }
     
