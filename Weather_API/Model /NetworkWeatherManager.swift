@@ -9,18 +9,25 @@ import UIKit
 import CoreLocation
 
 class NetworkWeatherManager {
+    
+    enum RequestType {
+        case cityName(city: String)
+        case coordinate(latitude: CLLocationDegrees, longitude: CLLocationDegrees)
+    }
+    
     var onCompletion:((CurrentWeather) -> Void)?
     
-    func fetchCurrentWeather(forCity city: String)  {
-        let urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&apikey=\(apiKey)&units=metric"
+    func fetchCurrentWeather(forRequestType requestType: RequestType) {//указываем способ запроса
+        var urlString = ""
+        switch requestType {
+        case .cityName(let city):
+            urlString = "https://api.openweathermap.org/data/2.5/weather?q=\(city)&apikey=\(apiKey)&units=metric"
+        case .coordinate(let latitude, let longitude):
+            urlString = "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
+        }
         performRequest(withURLString: urlString)
+        
     }
-    func fetchCurrentWeather(forLatitude latitude: CLLocationDegrees,forLongitude longitude: CLLocationDegrees)  {
-        let urlString = 
-        "https://api.openweathermap.org/data/2.5/weather?lat=\(latitude)&lon=\(longitude)&appid=\(apiKey)&units=metric"
-        performRequest(withURLString: urlString)
-    }
-    
    private func performRequest(withURLString urlString: String) {
         guard let url = URL(string: urlString) else { return }
         let session = URLSession(configuration: .default)
