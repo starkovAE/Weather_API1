@@ -21,18 +21,25 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        networkWeatherManager.fetchCurrentWeather(forCity: "London") { currentWeather in
-            print(currentWeather.cityName)
+        networkWeatherManager.onCompletion = { [weak self] currentWeather in
+            guard let self = self else { return }
+            self.updateInterfaceWith(weather: currentWeather)
         }
+        networkWeatherManager.fetchCurrentWeather(forCity: "London")
     }
 
     @IBAction func searchPressed(_ sender: UIButton) {
-        self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) { cityName in
-            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName){ currentWeather in
-                print(currentWeather.cityName)
-            }
+        self.presentSearchAlertController(withTitle: "Enter city name", message: nil, style: .alert) {[unowned self] cityName in
+            self.networkWeatherManager.fetchCurrentWeather(forCity: cityName)
         }
     }
-    
+    private func updateInterfaceWith(weather: CurrentWeather) {
+        DispatchQueue.main.async { //тут происходит обновление интерфейса, поэтому мы помещаем этот код в глваную очередь (main) для того чтобы пользователь не ждал загрузки данных, мы проихводим ее асихнхронно (неодновременно). Чтобы интефейс работал. Если бы сделали синхронно - интерфейс бы не работал
+            self.citiesLabel.text = weather.cityName
+            self.temperatureLabel.text = weather.temeratureString
+            self.feelLikeTemperatureLabel.text = "\(weather.feelsLikeTempratureString)°C"
+            self.weatherImageView.image = UIImage(systemName: weather.systemIconNameString)
+        }
+    }
 }
 
